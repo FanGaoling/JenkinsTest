@@ -1,79 +1,50 @@
-String workspace = '/home/app/jenkins/'
+String datasyncUrl = '/home/app/jenkins/datasync'
 
 pipeline {
     agent any
     options {
-        timeout(time:1,unit:'HOURS')
-    }
-    parameters {
-         string(
-                description: '当前所属stage ?',
-                name: 'name', 
-                defaultValue: ''
-        )
+        timeout(time:3,unit:'HOURS')
+        retry(3) 
     }
     stages {
-        stage('ShareLibrary') {
-            when { 
-                environment name: 'stageName', value: 'build'
-            }
-            steps {
-                script{ 
-                    echo '获取代码'
+        stage('jobcreate') {
+            steps 
+                timeout(time: 30, unit: 'MINUTES') {
+                    sh "${datasyncUrl}/this_jobcreate.sh"
                 }
             }
         }
-        stage('Build - Staging') {
+        stage('datasync') {
             steps {    
-               // echo "参数：${params}"
-               //echo "用户名2 ${params.deploy_username}"
-               echo '获取代码'
-            }
-        }
-        stage('Test - Staging') {
-            steps {
-                echo 'Testing'
-                script{
-                    // sh '/home/app/jenkins/testreturn.sh > commandResult'
-                    sh "${workspace}testreturn.sh > commandResult"
-                    name=readFile('commandResult').trim()
-                    echo "${name}" // 返回值应该是lisi
-                    name=sh(script: "/home/app/jenkins/testreturn2.sh", returnStdout: true).trim()
-                    echo "${name}" // 返回值应该是wangwu
+               timeout(time: 1, unit: 'HOURS') {
+                    sh "${datasyncUrl}/this_datasync.sh"
                 }
             }
         }
-        stage('Parallel - Staging'){
+        stage('loaddata'){
             failFast true 
             parallel{
-                stage('Parallel - A'){
-                    //agent
+                stage('this_loaddata'){
                     steps{
-                        echo '-- on Parallel - A'
+                        timeout(time: 30, unit: 'MINUTES') {
+                            sh "${datasyncUrl}/this_loaddata.sh"
+                        }
                     }
                 }
-                stage('Parallel - B'){
+                stage('last_loaddata'){
                     //agent
                     steps{
-                        echo '-- on Parallel - B'
+                        timeout(time: 1, unit: 'HOURS') {
+                            sh "${datasyncUrl}/last_loaddata.sh"
+                        }
                     }
                 }
             } 
         }
-        stage('RetryAndTimeout - Staging') {
+        stage('end') {
             steps {
-                retry(3) {
-                    // sh './flakey-deploy.sh'
-                }
-                timeout(time: 3, unit: 'MINUTES') {
-                    // sh './health-check.sh'
-                }
+                echo 'Finished datasyncing'
             }
-            post {
-                    always {
-                        echo 'post in stage'
-                    }
-                }
         }
     }
     post{
@@ -81,20 +52,19 @@ pipeline {
             echo '-- This will always run'
         }
         changed {
-            echo '-- This will run only if the state of the Pipeline has changed'
-            echo '-- For example, if the Pipeline was previously failing but is now successful'
+            echo '-- changed'
         }
         failure {
-            echo '-- This will run only if failed'
+            echo '-- failed'
         }
         success {
-            echo '-- This will run only if successful'
+            echo '-- successful'
         }
         unstable {            
-            echo '-- This will run only if the run was marked as unstable'
+            echo '-- unstable'
         }
         aborted {
-            echo '-- This will run only if aborted'
+            echo '-- aborted'
         }
     }
 }
