@@ -8,7 +8,7 @@ pipeline {
     }
     stages {
         stage('jobcreate') {
-            steps 
+            steps {
                 timeout(time: 30, unit: 'MINUTES') {
                     sh "${datasyncUrl}/this_jobcreate.sh"
                 }
@@ -49,7 +49,7 @@ pipeline {
     }
     post{
         always {
-            echo '-- This will always run'
+            echo '-- always run'
         }
         changed {
             echo '-- changed'
