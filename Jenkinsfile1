@@ -5,6 +5,13 @@ pipeline {
     options {
         timeout(time:1,unit:'HOURS')
     }
+    parameters{
+        String{
+            name:'',
+            defaultValue:''
+            describe:''
+        }
+    }
     stages {
         stage('ShareLibrary') {
             when { 
@@ -25,11 +32,8 @@ pipeline {
         }
         stage('Test - Staging') {
             steps {
-                echo "Test stage: 是否执行自动化测试: ${params.test_skip_flag} ..."
                 echo 'Testing'
-
                 script{
-                    echo "当前所属阶段：${name} (默认值)"
                     // sh '/home/app/jenkins/testreturn.sh > commandResult'
                     sh "${workspace}testreturn.sh > commandResult"
                     name=readFile('commandResult').trim()
