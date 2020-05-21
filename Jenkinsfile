@@ -11,7 +11,10 @@ hello('Joe')
 String jenkinsUrl = '/home/app/jenkins/'
 
 pipeline {
-    agent any //必须在pipeline块内的顶层定义，stage块内的agent是可选的
+    // agent any //必须在pipeline块内的顶层定义，stage块内的agent是可选的
+    agent {
+        label 'master'
+    }
 
     // 定义流水线运行时的配置选项
     options {
@@ -205,7 +208,7 @@ pipeline {
                 stage('catchError - subStaging'){
                     steps {
                         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                            sh './test.sh' // 没有这个文件.           
+                            sh './test.sh' // 没有这个文件. 这种方式可以让该stage失败时不影响后续的stage的执行           
                         }
                     }
                 }
