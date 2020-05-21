@@ -201,14 +201,25 @@ pipeline {
             } 
         }
         stage('TryCatch - Staging') {
-            steps {
-                script {
-                    try {
-                        sh './test.sh' // 没有这个文件
+            parallel {
+                stage('catchError - subStaging'){
+                    steps {
+                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                            sh './test.sh' // 没有这个文件.           
+                        }
                     }
-                    catch(ex){
-                        echo 'try-catch stage is always successful'
-                        echo ex.getMessage()
+                }
+                stage('trycatchError - subStaging'){
+                    steps {
+                        script {
+                            try {
+                                sh './test.sh' // 没有这个文件.这种方式可以忽略所有代码造成的错误，但是会一直使该stage保持成功状态
+                            }
+                            catch(ex){
+                                echo 'try-catch stage is always successful'
+                                echo ex.getMessage()
+                            }
+                        }
                     }
                 }
             }
