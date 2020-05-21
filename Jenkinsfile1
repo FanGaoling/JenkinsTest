@@ -5,12 +5,12 @@ pipeline {
     options {
         timeout(time:1,unit:'HOURS')
     }
-    parameters{
-        String{
-            name:'',
-            defaultValue:''
-            describe:''
-        }
+    parameters {
+         string(
+                description: '当前所属stage ?',
+                name: 'name', 
+                defaultValue: ''
+        )
     }
     stages {
         stage('ShareLibrary') {
