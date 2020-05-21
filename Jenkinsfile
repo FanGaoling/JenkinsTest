@@ -200,6 +200,19 @@ pipeline {
                 }
             } 
         }
+        stage('TryCatch - Staging') {
+            steps {
+                script {
+                    try {
+                        sh './test.sh' // 没有这个文件
+                    }
+                    catch(ex){
+                        echo 'try-catch stage is always successful'
+                        echo ex.getMessage()
+                    }
+                }
+            }
+        }
         stage('RetryAndTimeout - Staging') {
             steps {
                 retry(3) {
