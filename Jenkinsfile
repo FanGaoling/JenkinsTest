@@ -127,8 +127,8 @@ pipeline {
                 }
             }
         }
-        stage('printParameter - Staging') {
-            steps {
+        // stage('printParameter - Staging') {
+        //     steps {
                 // // echo env.PATH 打印环境变量
                 // echo "参数：${params}"
                 // echo "用户名1 ${deploy_username}"
@@ -148,15 +148,15 @@ pipeline {
                 // script{ 
                 //     tools.PrintMes("变量值：${variable} (zhangsan)",'green')
                 // }
-            }
-        }
-        stage('setVarVal - Staging') {
-            steps {
+        //     }
+        // }
+        // stage('setVarVal - Staging') {
+        //     steps {
                 // echo "用户名5 ${params.deploy_username}"
                 // echo "Test stage: 是否执行自动化测试: ${params.test_skip_flag} ..."
                 // echo 'Testing'
 
-                script{
+                // script{
                     
                     // sh "chmod +x ./shfolder/first.sh"
                     // sh "chmod +x ./shfolder/second.sh"
@@ -173,16 +173,16 @@ pipeline {
                     // tools.PrintMes("变量值：${variable} (lisi)",'green')
 
                     // variable=sh(script: "/home/app/jenkins/testreturn2.sh", returnStdout: true).trim()
-                }
-            }
-        }
-         stage('verifyVariable - Staging') {
-            steps {
+                // }
+        //     }
+        // }
+        //  stage('verifyVariable - Staging') {
+        //     steps {
                 // script{ 
                 //     tools.PrintMes("变量值：${variable} (wangwu)",'green')
                 // }
-            }
-        }
+        //     }
+        // }
         stage('Parallel - Staging'){
             failFast true //failFast true 当其中一个进程失败时，强制所有的 parallel 阶段都被终止
             // 一个stage有且之只能有一个 steps /stages 或 parallel的阶段。 
