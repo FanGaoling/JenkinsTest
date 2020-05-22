@@ -10,14 +10,14 @@ pipeline {
         stage('jobcreate') {
             steps {
                 timeout(time: 30, unit: 'MINUTES') {
-                    sh "${datasyncUrl}/this_jobcreate.sh"
+                    //sh "${datasyncUrl}/this_jobcreate.sh"
                 }
             }
         }
         stage('datasync') {
             steps {    
                timeout(time: 1, unit: 'HOURS') {
-                    sh "${datasyncUrl}/this_datasync.sh"
+                    //sh "${datasyncUrl}/this_datasync.sh"
                 }
             }
         }
@@ -27,7 +27,7 @@ pipeline {
                 stage('this_loaddata'){
                     steps{
                         timeout(time: 30, unit: 'MINUTES') {
-                            sh "${datasyncUrl}/this_loaddata.sh"
+                            //sh "${datasyncUrl}/this_loaddata.sh"
                         }
                     }
                 }
@@ -35,7 +35,7 @@ pipeline {
                     //agent
                     steps{
                         timeout(time: 1, unit: 'HOURS') {
-                            sh "${datasyncUrl}/last_loaddata.sh"
+                            //sh "${datasyncUrl}/last_loaddata.sh"
                         }
                     }
                 }
