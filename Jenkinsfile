@@ -246,7 +246,8 @@ pipeline {
         }
         stage('Archive') {
             steps {
-                archiveArtifacts artifacts: '/target/test.jar', fingerprint: true 
+                //archiveArtifacts 捕捉构建时匹配模式 **/target/*.jar 的文件并保存到 Jenkins 主进程供以后检索
+                archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true  // 匹配并保存文件供以后检索
             }
         }
     }
