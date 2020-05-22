@@ -204,14 +204,14 @@ pipeline {
             } 
         }
         stage('TryCatch - Staging') {
-            parallel {
-                stage('catchError - subStaging'){
-                    steps {
-                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                            sh './test.sh' // 没有这个文件. 这种方式可以让该stage失败时不影响后续的stage的执行           
-                        }
-                    }
-                }
+            // parallel {
+                // stage('catchError - subStaging'){
+                //     steps {
+                //         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                //             sh './test.sh' // 没有这个文件. 这种方式可以让该stage失败时不影响后续的stage的执行           
+                //         }
+                //     }
+                // }
                 stage('trycatchError - subStaging'){
                     steps {
                         script {
@@ -225,7 +225,7 @@ pipeline {
                         }
                     }
                 }
-            }
+            // }
         }
         stage('RetryAndTimeout - Staging') {
             steps {
