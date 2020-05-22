@@ -207,7 +207,10 @@ pipeline {
             parallel {
                 stage('catchError - subStaging'){
                     steps {
-                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+
+                        //catchError(message: message, buildResult: 'UNSTABLE', stageResult: 'UNSTABLE')
+                        //如果出现异常，将buildResult设置为SUCCESS，SUCCESS设置为FAILURE
+                        catchError(message: 'this is a error message',buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                             sh './test.sh' // 没有这个文件. 这种方式可以让该stage失败时不影响后续的stage的执行           
                         }
                     }
@@ -247,6 +250,7 @@ pipeline {
         stage('Archive') {
             steps {
                 //archiveArtifacts 捕捉构建时匹配模式 **/target/*.jar 的文件并保存到 Jenkins 主进程供以后检索
+                //Jenkins 的文件存档不能代替 Artifactory 或 Nexus 等外部文件存储库，应仅用于基本报告和文件存档。
                 archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true  // 匹配并保存文件供以后检索
             }
         }
