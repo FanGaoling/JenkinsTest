@@ -48,11 +48,11 @@ pipeline {
         //     choices: ['Module1', 'Module2', 'Module3']
         // )
 
-        string(
-                description: '当前所属stage ?',
-                name: 'variable', 
-                defaultValue: 'zhangsan'
-        )
+        // string(
+        //         description: '当前所属stage ?',
+        //         name: 'variable', 
+        //         defaultValue: 'zhangsan'
+        // )
 
         // string(
         //         description: '你需要在哪台机器上进行部署 ?',
@@ -144,10 +144,10 @@ pipeline {
                 // echo "printParameter stage: Release Note的信息为 : ${params.release_note} ..." 
                 // echo "printParameter stage: 选中的构建Module为 : ${params.modulename} ..."
 
-                echo "变量值：${variable} (默认值zhangsan)"
-                script{ 
-                    tools.PrintMes("变量值：${variable} (zhangsan)",'green')
-                }
+                // echo "变量值：${variable} (默认值zhangsan)"
+                // script{ 
+                //     tools.PrintMes("变量值：${variable} (zhangsan)",'green')
+                // }
             }
         }
         stage('setVarVal - Staging') {
@@ -158,29 +158,29 @@ pipeline {
 
                 script{
                     
-                    sh "chmod +x ./shfolder/first.sh"
-                    sh "chmod +x ./shfolder/second.sh"
-                    sh "chmod +x ./shfolder/three.sh"
+                    // sh "chmod +x ./shfolder/first.sh"
+                    // sh "chmod +x ./shfolder/second.sh"
+                    // sh "chmod +x ./shfolder/three.sh"
 
-                    tools.PrintMes("变量值：${variable} (zhangsan)",'green')
+                    // tools.PrintMes("变量值：${variable} (zhangsan)",'green')
 
-                    variable=sh(script: "./shfolder/first.sh ${variable}", returnStdout: true).trim()
-                    tools.PrintMes("变量值：${variable} (lisi2)",'green')
+                    // variable=sh(script: "./shfolder/first.sh ${variable}", returnStdout: true).trim()
+                    // tools.PrintMes("变量值：${variable} (lisi2)",'green')
 
-                    // sh '/home/app/jenkins/testreturn.sh > commandResult'
-                    sh "${jenkinsUrl}testreturn.sh > commandResult"
-                    variable=readFile('commandResult').trim()
-                    tools.PrintMes("变量值：${variable} (lisi)",'green')
+                    // // sh '/home/app/jenkins/testreturn.sh > commandResult'
+                    // sh "${jenkinsUrl}testreturn.sh > commandResult"
+                    // variable=readFile('commandResult').trim()
+                    // tools.PrintMes("变量值：${variable} (lisi)",'green')
 
-                    variable=sh(script: "/home/app/jenkins/testreturn2.sh", returnStdout: true).trim()
+                    // variable=sh(script: "/home/app/jenkins/testreturn2.sh", returnStdout: true).trim()
                 }
             }
         }
          stage('verifyVariable - Staging') {
             steps {
-                script{ 
-                    tools.PrintMes("变量值：${variable} (wangwu)",'green')
-                }
+                // script{ 
+                //     tools.PrintMes("变量值：${variable} (wangwu)",'green')
+                // }
             }
         }
         stage('Parallel - Staging'){
