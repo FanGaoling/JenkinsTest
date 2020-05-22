@@ -244,6 +244,11 @@ pipeline {
                     }
             }
         }
+        stage('Archive') {
+            steps {
+                archiveArtifacts artifacts: 'target/test.jar', fingerprint: true 
+            }
+        }
     }
     // post可以放在顶层，也就是和agent{…}同级，也可以放在stage里面
     // post部分定义Pipeline运行或阶段结束时运行的操作。
