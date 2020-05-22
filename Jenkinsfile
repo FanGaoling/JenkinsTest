@@ -246,7 +246,7 @@ pipeline {
         }
         stage('Archive') {
             steps {
-                archiveArtifacts artifacts: 'target/test.jar', fingerprint: true 
+                archiveArtifacts artifacts: '/target/test.jar', fingerprint: true 
             }
         }
     }
