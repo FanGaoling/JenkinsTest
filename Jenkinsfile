@@ -42,11 +42,11 @@ pipeline {
         // file	指定构建过程中所需要的文件
         // password 考虑到安全的因素，需要通过参数方式传递的密码类型
 
-        choice(
-            description: '你需要选择哪个模块进行构建 ?',
-            name: 'modulename',
-            choices: ['Module1', 'Module2', 'Module3']
-        )
+        // choice(
+        //     description: '你需要选择哪个模块进行构建 ?',
+        //     name: 'modulename',
+        //     choices: ['Module1', 'Module2', 'Module3']
+        // )
 
         string(
                 description: '当前所属stage ?',
@@ -54,43 +54,43 @@ pipeline {
                 defaultValue: 'zhangsan'
         )
 
-        string(
-                description: '你需要在哪台机器上进行部署 ?',
-                name: 'deploy_hostname', 
-                defaultValue: 'host131'
-        )
+        // string(
+        //         description: '你需要在哪台机器上进行部署 ?',
+        //         name: 'deploy_hostname', 
+        //         defaultValue: 'host131'
+        // )
        
-        string(
-                description: '部署机器连接时需要用到的用户名是什么 ?',
-                name: 'deploy_username', 
-                defaultValue: 'admin'
-        )
+        // string(
+        //         description: '部署机器连接时需要用到的用户名是什么 ?',
+        //         name: 'deploy_username', 
+        //         defaultValue: 'admin'
+        // )
 
-        text(
-            name: 'release_note', 
-            defaultValue: 'Release Note 信息如下所示: \n \
-            Bug-Fixed: \n \
-            Feature-Added: ', 
-            description: 'Release Note的详细信息是什么 ?'
-        )
+        // text(
+        //     name: 'release_note', 
+        //     defaultValue: 'Release Note 信息如下所示: \n \
+        //     Bug-Fixed: \n \
+        //     Feature-Added: ', 
+        //     description: 'Release Note的详细信息是什么 ?'
+        // )
 
-        booleanParam(
-            name: 'test_skip_flag', 
-            defaultValue: true, 
-            description: '你需要在部署之前执行自动化测试么 ?'
-        )
+        // booleanParam(
+        //     name: 'test_skip_flag', 
+        //     defaultValue: true, 
+        //     description: '你需要在部署之前执行自动化测试么 ?'
+        // )
 
-        password(
-            name: 'deploy_password', 
-            defaultValue: 'liumiaocn', 
-            description: '部署机器连接时需要用到的密码信息是什么 '
-        )
+        // password(
+        //     name: 'deploy_password', 
+        //     defaultValue: 'liumiaocn', 
+        //     description: '部署机器连接时需要用到的密码信息是什么 '
+        // )
 
-        // 文件怎么用
-        file(
-            name: "deploy_property_file", 
-            description: "你需要输入的部署环境的设定文件是什么 ?"
-        )
+        // // 文件怎么用
+        // file(
+        //     name: "deploy_property_file", 
+        //     description: "你需要输入的部署环境的设定文件是什么 ?"
+        // )
     }
     // stages 在pipeline内只有一次
     stages {
@@ -130,19 +130,19 @@ pipeline {
         stage('printParameter - Staging') {
             steps {
                 // // echo env.PATH 打印环境变量
-                echo "参数：${params}"
-                echo "用户名1 ${deploy_username}"
-                echo "用户名2 ${params.deploy_username}"
-                echo "用户名3 " + params.deploy_username
-                echo "用户名4 " + deploy_username
-                // echo '参数：${params}' //错误用法
-                // echo '参数：' params //错误用法
+                // echo "参数：${params}"
+                // echo "用户名1 ${deploy_username}"
+                // echo "用户名2 ${params.deploy_username}"
+                // echo "用户名3 " + params.deploy_username
+                // echo "用户名4 " + deploy_username
+                // // echo '参数：${params}' //错误用法
+                // // echo '参数：' params //错误用法
                 
-                echo "printParameter stage: 部署机器的名称 : ${params.deploy_hostname} ..."
-                echo "DeprintParameterploy stage: 部署机器的用户名 : ${params.deploy_username} ..." 
-                echo "printParameter stage: 部署连接的密码 : ${params.deploy_password} ..." 
-                echo "printParameter stage: Release Note的信息为 : ${params.release_note} ..." 
-                echo "printParameter stage: 选中的构建Module为 : ${params.modulename} ..."
+                // echo "printParameter stage: 部署机器的名称 : ${params.deploy_hostname} ..."
+                // echo "DeprintParameterploy stage: 部署机器的用户名 : ${params.deploy_username} ..." 
+                // echo "printParameter stage: 部署连接的密码 : ${params.deploy_password} ..." 
+                // echo "printParameter stage: Release Note的信息为 : ${params.release_note} ..." 
+                // echo "printParameter stage: 选中的构建Module为 : ${params.modulename} ..."
 
                 echo "变量值：${variable} (默认值zhangsan)"
                 script{ 
@@ -152,9 +152,9 @@ pipeline {
         }
         stage('setVarVal - Staging') {
             steps {
-                echo "用户名5 ${params.deploy_username}"
-                echo "Test stage: 是否执行自动化测试: ${params.test_skip_flag} ..."
-                echo 'Testing'
+                // echo "用户名5 ${params.deploy_username}"
+                // echo "Test stage: 是否执行自动化测试: ${params.test_skip_flag} ..."
+                // echo 'Testing'
 
                 script{
                     
