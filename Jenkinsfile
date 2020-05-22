@@ -34,7 +34,7 @@ pipeline {
     }
 
     // 首次执行无需选择参数，首次执行会生成Jenkins的参数选择块的内容，缺省值作为参数。首次执行之后，Job参数的设定也已经生成，再次执行的时候，输入参数的选择则会生效
-    parameters {
+    // parameters {
         // string 字符串类型参数
         // text	文本类型参数，与字符串的区别在于可以包含多行信息，用于传入较多信息输入
         // booleanParam	布尔类型参数
@@ -91,7 +91,7 @@ pipeline {
         //     name: "deploy_property_file", 
         //     description: "你需要输入的部署环境的设定文件是什么 ?"
         // )
-    }
+    // }
     // stages 在pipeline内只有一次
     stages {
         stage('script - stage') {
