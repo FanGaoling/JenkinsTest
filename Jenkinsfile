@@ -19,8 +19,8 @@ pipeline {
     // 定义流水线运行时的配置选项
     options {
         //持久化工件和控制台输出，用于保存Pipeline最近几次运行的数据
-        buildDiscarder(logRotator(numToKeepStr: '1')) //默认几次？
-        disableConcurrentBuilds() //不允许并行执行Pipeline。可用于防止同时访问共享资源等。
+        buildDiscarder(logRotator(numToKeepStr: '6')) //默认几次？
+        // disableConcurrentBuilds() //不允许并行执行Pipeline。可用于防止同时访问共享资源等。
         retry(3) //如果失败，请按指定的次数重试整个管道。
         skipStagesAfterUnstable() //一旦构建状态进入了“不稳定”状态，就跳过stage。
         timeout(time:1,unit:'HOURS') //设置流水线运行的超时时间, 在此之后，Jenkins将中止流水线。 状态为aborted
