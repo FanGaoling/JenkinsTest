@@ -9,6 +9,7 @@ pipeline {
     stages {
         stage('jobcreate') {
             steps {
+                echo "${params.month}"
                 timeout(time: 30, unit: 'MINUTES') {
                     //sh "${datasyncUrl}/this_jobcreate.sh"
                 }
