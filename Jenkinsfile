@@ -157,10 +157,6 @@ pipeline {
                 echo 'Testing'
 
                 script{
-                    
-                    sh "chmod +x ./shfolder/first.sh"
-                    sh "chmod +x ./shfolder/second.sh"
-                    sh "chmod +x ./shfolder/three.sh"
 
                     tools.PrintMes("变量值：${variable} (zhangsan)",'green')
 
@@ -168,7 +164,7 @@ pipeline {
                     tools.PrintMes("变量值：${variable} (lisi2)",'green')
 
                     // sh '/home/app/jenkins/testreturn.sh > commandResult'
-                    sh "${jenkinsUrl}testreturn.sh > commandResult"
+                    sh "sh ${jenkinsUrl}testreturn.sh > commandResult"
                     variable=readFile('commandResult').trim()
                     tools.PrintMes("变量值：${variable} (lisi)",'green')
 
@@ -207,11 +203,9 @@ pipeline {
             parallel {
                 stage('catchError - subStaging'){
                     steps {
-
-                        //catchError(message: message, buildResult: 'UNSTABLE', stageResult: 'UNSTABLE')
-                        //如果出现异常，将buildResult设置为SUCCESS，SUCCESS设置为FAILURE
+                        //如果出现异常，显示的错误日志为message，将buildResult设置为SUCCESS，SUCCESS设置为FAILURE
                         catchError(message: 'this is a error message',buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                            sh './test.sh' // 没有这个文件. 这种方式可以让该stage失败时不影响后续的stage的执行           
+                            sh ' sh test.sh' // 没有这个文件. 这种方式可以让该stage失败时不影响后续的stage的执行           
                         }
                     }
                 }
@@ -219,7 +213,7 @@ pipeline {
                     steps {
                         script {
                             try {
-                                sh './test.sh' // 没有这个文件.这种方式可以忽略所有代码造成的错误，但是会一直使该stage保持成功状态
+                                sh 'sh test.sh' // 没有这个文件.这种方式可以忽略所有代码造成的错误，但是会一直使该stage保持成功状态
                             }
                             catch(ex){
                                 echo 'try-catch stage is always successful'
@@ -234,11 +228,11 @@ pipeline {
             steps {
                 retry(3) {
                     // 没有这个文件的话会尝试3次，然后流水线状态为失败
-                    // sh './flakey-deploy.sh'
+                    // sh 'sh flakey-deploy.sh'
                 }
                 // timeout: 设置流水线运行的超时时间, 在此之后，Jenkins将中止流水线。
                 timeout(time: 3, unit: 'MINUTES') {
-                    // sh './health-check.sh'
+                    // sh 'sh health-check.sh'
                 }
             }
             post {
