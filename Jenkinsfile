@@ -97,6 +97,11 @@ pipeline {
         stage('script - stage') {
             steps {
                 script {
+                    def datesplit = params.datevalue.split('-')
+
+                    echo datesplit
+                    echo datesplit[0]
+
                     def browsers = ['chrome', 'firefox']
                     for (int i = 0; i < browsers.size(); ++i) {
                         tools.PrintMes("Testing the ${browsers[i]} browser",'red')
