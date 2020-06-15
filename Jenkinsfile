@@ -85,12 +85,6 @@ pipeline {
             defaultValue: 'liumiaocn', 
             description: '部署机器连接时需要用到的密码信息是什么 '
         )
-
-        // 文件怎么用
-        // file(
-        //     name: "deploy_property_file", 
-        //     description: "你需要输入的部署环境的设定文件是什么 ?"
-        // )
     }
     // stages 在pipeline内只有一次
     stages {

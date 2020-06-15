@@ -1,0 +1,86 @@
+String month='0'
+String day='0'
+
+
+pipeline { 
+    agent any 
+    options { 
+            timeout(time:3,unit:'HOURS') 
+            retry(3)  
+    } 
+    stages { 
+
+        stage('initparam') {
+            steps{
+                script {
+                    def varbal=params.datevalue.split('-')
+                    month=varbal[1]
+                    day=varbal[2]
+
+                    echo "initparam-stage ${month} , ${day}"
+                }
+            }
+        }
+
+        stage('jobcreate') { 
+            steps { 
+                timeout(time: 30, unit: 'MINUTES') { 
+                    //sh "sh job_create_start.sh ${month}" 
+                }
+
+            } 
+        } 
+        stage('datasync') { 
+            steps {  
+                timeout(time: 1, unit: 'HOURS') { 
+                    //sh "sh this_datasync.sh ${month}" 
+                } 
+            } 
+        } 
+        stage('loaddata'){ 
+            failFast true  
+            parallel{ 
+                stage('this_loaddata'){ 
+                    steps{ 
+                        timeout(time: 30, unit: 'MINUTES') { 
+                            //sh "sh this_loaddata.sh ${month}" 
+                        } 
+                    } 
+                } 
+                stage('last_loaddata'){ 
+                    //agent 
+                    steps{ 
+                        timeout(time: 1, unit: 'HOURS') { 
+                            //sh "sh last_loaddata.sh ${month} ${day}" 
+                        } 
+                    } 
+                } 
+            }  
+        } 
+        stage('end') { 
+            steps { 
+                echo 'Finished datasyncing' 
+            } 
+        } 
+    } 
+    post{ 
+        always { 
+            echo '-- always run' 
+        } 
+        changed { 
+            echo '-- changed' 
+        } 
+        failure { 
+            echo '-- failed' 
+        } 
+        success { 
+            echo '-- successful' 
+        } 
+        unstable {  
+            echo '-- unstable' 
+        } 
+        aborted { 
+            echo '-- aborted' 
+        } 
+    } 
+ } 
