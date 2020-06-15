@@ -160,7 +160,7 @@ pipeline {
 
                     tools.PrintMes("变量值：${variable} (zhangsan)",'green')
 
-                    variable=sh(script: "./shfolder/first.sh ${variable}", returnStdout: true).trim()
+                    variable=sh(script: "sh shfolder/first.sh ${variable}", returnStdout: true).trim()
                     tools.PrintMes("变量值：${variable} (lisi2)",'green')
 
                     // sh '/home/app/jenkins/testreturn.sh > commandResult'
