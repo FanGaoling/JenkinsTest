@@ -87,20 +87,17 @@ pipeline {
         )
 
         // 文件怎么用
-        file(
-            name: "deploy_property_file", 
-            description: "你需要输入的部署环境的设定文件是什么 ?"
-        )
+        // file(
+        //     name: "deploy_property_file", 
+        //     description: "你需要输入的部署环境的设定文件是什么 ?"
+        // )
     }
     // stages 在pipeline内只有一次
     stages {
         stage('script - stage') {
             steps {
                 script {
-                    def datesplit = params.datevalue.split('-')
-
-                    echo datesplit
-                    echo datesplit[0]
+                    def datesplit = params.deploy_property_filedeploy_property_file.split('-')
 
                     def browsers = ['chrome', 'firefox']
                     for (int i = 0; i < browsers.size(); ++i) {
