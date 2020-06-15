@@ -97,8 +97,6 @@ pipeline {
         stage('script - stage') {
             steps {
                 script {
-                    def datesplit = params.deploy_property_filedeploy_property_file.split('-')
-
                     def browsers = ['chrome', 'firefox']
                     for (int i = 0; i < browsers.size(); ++i) {
                         tools.PrintMes("Testing the ${browsers[i]} browser",'red')
